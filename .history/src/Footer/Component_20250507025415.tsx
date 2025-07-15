@@ -1,0 +1,84 @@
+
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import Link from 'next/link'
+import React from 'react'
+
+import type { Footer } from '@/payload-types'
+
+import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { CMSLink } from '@/components/Link'
+
+export async function Footer() {
+
+  const footerData: Footer = await getCachedGlobal('footer', 1)();
+  const navItems = footerData?.navItems || [];
+
+  return (
+
+    <footer className="mt-auto border-t border-border bg-white dark:bg-card text-black">
+
+      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
+
+        <div className="">
+
+          <h4 className='text-[#FDB73E] text-[30px] mb-5'>
+            Contact Us
+          </h4>
+
+          <p className='text-[20px]'>
+            Book Bunk Trust<br />
+            P.O Box 532-00522<br />
+            Makadara, Nairobi<br />
+            +254714258474<br />
+
+            <a
+              className='text-[#FDB73E]'
+              href='mailto:hello@bookbunk.org.za'>
+              hello@bookbunk.org
+            </a>
+
+          </p>
+
+        </div>
+
+        <div className="">
+
+          <h4 className='text-[#FDB73E] text-[30px] mb-5'>
+            Quick Links
+          </h4>
+
+          <nav className="flex flex-col gap-4">
+
+            {navItems.map(({ link }, i) => {
+              return <CMSLink className="" key={i} {...link} />
+            })}
+
+            Terms of Use
+
+          </nav>
+
+        </div>
+
+        <div className="">
+
+          <h4 className='text-[#FDB73E] text-[30px] mb-5'>
+            Follow Us
+          </h4>
+
+          <nav className="flex flex-col gap-4">
+
+            {navItems.map(({ link }, i) => {
+              return <CMSLink className="" key={i} {...link} />
+            })}
+
+          </nav>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  )
+
+}
