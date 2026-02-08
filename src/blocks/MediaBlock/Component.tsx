@@ -35,9 +35,10 @@ export const MediaBlock: React.FC<Props> = (props) => {
   return (
     <div
       className={cn(
-        '',
+        'hanken',
         {
           container: enableGutter,
+          'py-6 md:py-10 px-4 md:px-8': enableGutter,
         },
         className,
       )}
@@ -52,7 +53,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
       {caption && (
         <div
           className={cn(
-            'mt-6',
+            'mt-4 md:mt-6',
             {
               container: !disableInnerContainer,
             },

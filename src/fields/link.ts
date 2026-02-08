@@ -39,7 +39,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
               layout: 'horizontal',
               width: '50%',
             },
-            defaultValue: 'reference',
+            defaultValue: 'custom',
             options: [
               {
                 label: 'Internal link',
@@ -71,26 +71,20 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     {
       name: 'reference',
       type: 'relationship',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'reference',
-      },
       label: 'Document to link to',
       relationTo: ['pages', 'posts'],
-      required: true,
+      required: false,
     },
     {
       name: 'url',
       type: 'text',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'custom',
-      },
       label: 'Custom URL',
-      required: true,
+      required: false,
     },
   ]
 
   if (!disableLabel) {
-    linkTypes.map((linkType) => ({
+    const linkTypesWithWidth = linkTypes.map((linkType) => ({
       ...linkType,
       admin: {
         ...linkType.admin,
@@ -101,7 +95,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     linkResult.fields.push({
       type: 'row',
       fields: [
-        ...linkTypes,
+        ...linkTypesWithWidth,
         {
           name: 'label',
           type: 'text',
@@ -109,7 +103,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
             width: '50%',
           },
           label: 'Label',
-          required: true,
+          required: false,
         },
       ],
     })

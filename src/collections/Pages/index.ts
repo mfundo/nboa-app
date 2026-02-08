@@ -3,12 +3,25 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
+import { AudioBitsCards } from '../../blocks/AudioBitsCards/config'
+import { AudioBitsGrid } from '../../blocks/AudioBitsGrid/config'
+import { Banner } from '../../blocks/Banner/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { Code } from '../../blocks/Code/config'
+import { Collections } from '../../blocks/Collections/config'
 import { Content } from '../../blocks/Content/config'
+import { ContentWithMedia } from '../../blocks/ContentWithMedia/config'
+import { FeaturedContent } from '../../blocks/FeaturedContent/config'
 import { FormBlock } from '../../blocks/Form/config'
+import { Gallery } from '../../blocks/Gallery/config'
+import { Grid6Masonry } from '../../blocks/Grid-6-Masonry/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { hero } from '@/heros/config'
-import { slugField } from 'payload'
+import { MissingBit } from '../../blocks/MissingBit/config'
+import { SectionIntro } from '../../blocks/SectionIntro/config'
+import { Services } from '../../blocks/Services/config'
+import { Slider } from '../../blocks/Slider/config'
+import { SpecialContent } from '../../blocks/SpecialContent/config'
+import { customSlugField } from '@/fields/Slug/config'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
@@ -35,6 +48,7 @@ export const Pages: CollectionConfig<'pages'> = {
   defaultPopulate: {
     title: true,
     slug: true,
+    layout: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -64,15 +78,11 @@ export const Pages: CollectionConfig<'pages'> = {
       type: 'tabs',
       tabs: [
         {
-          fields: [hero],
-          label: 'Hero',
-        },
-        {
           fields: [
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [Archive, AudioBitsCards, AudioBitsGrid, Banner, CallToAction, Code, Collections, Content, ContentWithMedia, FeaturedContent, FormBlock, Gallery, Grid6Masonry, MediaBlock, MissingBit, SectionIntro, Services, Slider, SpecialContent],
               required: true,
               admin: {
                 initCollapsed: true,
@@ -117,7 +127,7 @@ export const Pages: CollectionConfig<'pages'> = {
         position: 'sidebar',
       },
     },
-    slugField(),
+    customSlugField(),
   ],
   hooks: {
     afterChange: [revalidatePage],

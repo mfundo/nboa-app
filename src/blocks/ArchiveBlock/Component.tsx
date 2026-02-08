@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import RichText from '@/components/RichText'
+import { cn } from '@/utilities/ui'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 
@@ -53,9 +54,9 @@ export const ArchiveBlock: React.FC<
   }
 
   return (
-    <div className="my-16" id={`block-${id}`}>
+    <div className={cn('hanken', 'my-8 md:my-16')} id={`block-${id}`}>
       {introContent && (
-        <div className="container mb-16">
+        <div className="container mb-8 md:mb-16">
           <RichText className="ms-0 max-w-[48rem]" data={introContent} enableGutter={false} />
         </div>
       )}

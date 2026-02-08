@@ -8,7 +8,6 @@ import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -64,24 +63,30 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout } = page
+  const { layout } = page
 
   return (
-    <article className="pt-16 pb-24">
+    <article>
+
       <PageClient />
+
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
+
     </article>
+
   )
+
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+
   const { slug = 'home' } = await paramsPromise
+
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const page = await queryPageBySlug({
@@ -89,9 +94,11 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   })
 
   return generateMeta({ doc: page })
+
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -110,4 +117,5 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
+
 })

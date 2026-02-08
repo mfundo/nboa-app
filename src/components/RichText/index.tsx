@@ -29,7 +29,10 @@ type NodeTypes =
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
   if (typeof value !== 'object') {
-    throw new Error('Expected value to be an object')
+    // If value is not populated (just an ID), return empty string
+    // This prevents the error and allows the link to be rendered safely
+    console.warn('Unpopulated internal document link:', value)
+    return '#'
   }
   const slug = value.slug
   return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`

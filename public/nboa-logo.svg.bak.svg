@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <path d="M24 2L6 10v14c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V10L24 2z" fill="#E8A82E"/>
+  <path d="M24 8L12 14v10c0 8.2 5.1 15.9 12 18 6.9-2.1 12-9.8 12-18V14L24 8z" fill="#D49A1E"/>
+  <text x="24" y="32" text-anchor="middle" font-family="serif" font-weight="bold" font-size="14" fill="#fff">N</text>
+</svg>
