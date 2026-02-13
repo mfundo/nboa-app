@@ -4,7 +4,7 @@ declare global {
       PAYLOAD_SECRET: string
       DATABASE_URL: string
       NEXT_PUBLIC_SERVER_URL: string
-      VERCEL_PROJECT_PRODUCTION_URL: string
+      PROJECT_PRODUCTION_URL: string
       // S3 storage (optional — only needed in production)
       S3_BUCKET?: string
       S3_ACCESS_KEY_ID?: string

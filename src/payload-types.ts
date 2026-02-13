@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    termsOfUse: TermsOfUse;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    termsOfUse: TermsOfUseSelect<false> | TermsOfUseSelect<true>;
   };
   locale: null;
   user: User & {
@@ -644,7 +646,7 @@ export interface ContentBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'outline' | 'icon') | null;
         };
         id?: string | null;
       }[]
@@ -694,7 +696,44 @@ export interface ContentWithMediaBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'outline' | 'icon') | null;
+          /**
+           * Select an icon from lucide-react. Type to search for icons. View all available icons at https://lucide.dev
+           */
+          icon?:
+            | (
+                | ''
+                | 'ArrowRight'
+                | 'ArrowLeft'
+                | 'ChevronRight'
+                | 'ChevronLeft'
+                | 'ExternalLink'
+                | 'Facebook'
+                | 'Twitter'
+                | 'Linkedin'
+                | 'Instagram'
+                | 'Github'
+                | 'Youtube'
+                | 'Mail'
+                | 'Download'
+                | 'Check'
+                | 'Home'
+                | 'Phone'
+                | 'Search'
+                | 'Star'
+                | 'Heart'
+                | 'Share2'
+                | 'Eye'
+                | 'Plus'
+                | 'X'
+                | 'Settings'
+                | 'Menu'
+                | 'Bell'
+                | 'Calendar'
+                | 'Clock'
+                | 'MapPin'
+              )
+            | null;
         };
         id?: string | null;
       }[]
@@ -1101,7 +1140,7 @@ export interface ServicesBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'outline' | 'icon') | null;
         };
         id?: string | null;
       }[]
@@ -1629,6 +1668,7 @@ export interface ContentWithMediaBlockSelect<T extends boolean = true> {
               url?: T;
               label?: T;
               appearance?: T;
+              icon?: T;
             };
         id?: T;
       };
@@ -2301,6 +2341,31 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "termsOfUse".
+ */
+export interface TermsOfUse {
+  id: number;
+  heading: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2355,6 +2420,17 @@ export interface FooterSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "termsOfUse_select".
+ */
+export interface TermsOfUseSelect<T extends boolean = true> {
+  heading?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

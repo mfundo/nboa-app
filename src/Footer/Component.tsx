@@ -7,6 +7,7 @@ import type { Footer } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
+import { TermsOfUseLink } from '@/TermsOfUse/TermsOfUseLink'
 
 export async function Footer() {
 
@@ -119,6 +120,7 @@ export async function Footer() {
           <p className="text-xs text-white/50 dark:text-white/50 light:text-gray-500 text-center md:text-left">
             &copy; {new Date().getFullYear()} NBOA. All rights reserved.
           </p>
+          <TermsOfUseLink />
         </div>
       </div>
     </footer>

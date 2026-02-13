@@ -54,7 +54,8 @@
     "react-hook-form": "7.45.4",
     "sharp": "0.34.2",
     "swiper": "^12.1.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "yet-another-react-lightbox": "^3.29.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

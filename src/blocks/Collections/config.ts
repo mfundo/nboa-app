@@ -16,8 +16,8 @@ export const Collections: Block = {
     {
       name: 'collection',
       type: 'array',
-      minRows: 5,
-      maxRows: 5,
+      minRows: 6,
+      maxRows: 6,
       admin: {
         initCollapsed: true,
       },

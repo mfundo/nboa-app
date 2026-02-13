@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import React from 'react'
 import Image from 'next/image'
+import { cn } from '@/utilities/ui'
 
 interface Props {
   className?: string
@@ -21,7 +21,7 @@ export const Logo = (props: Props) => {
       height={64}
       loading={priority ? undefined : loading}
       priority={priority}
-      className={clsx('w-16 h-16 md:w-20 md:h-20', className)}
+      className={cn('w-16 h-16 md:w-20 md:h-20', className)}
       src="/nboa-logo.svg"
     />
   )

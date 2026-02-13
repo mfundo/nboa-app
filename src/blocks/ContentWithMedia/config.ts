@@ -55,7 +55,7 @@ export const ContentWithMedia: Block = {
       admin: {
         initCollapsed: true,
       },
-      fields: [link()],
+      fields: [link({ disableIcon: false })],
     },
   ],
 }

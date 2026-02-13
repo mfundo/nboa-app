@@ -2,8 +2,8 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 import redirects from './redirects.js'
 
-const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+const NEXT_PUBLIC_SERVER_URL = process.env.PROJECT_PRODUCTION_URL
+  ? `https://${process.env.PROJECT_PRODUCTION_URL}`
   : undefined || process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
 
 // S3 bucket hostname for Next.js image optimization
@@ -40,6 +40,12 @@ const nextConfig = {
         hostname: 'via.placeholder.com',
         protocol: 'https',
       },
+      {
+        protocol: 'http',
+        hostname: 'application-load-balancer-1704593135.eu-west-1.elb.amazonaws.com',
+        port: '',
+        pathname: '/api/media/**',
+      }
     ],
   },
   webpack: (webpackConfig) => {

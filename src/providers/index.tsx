@@ -2,13 +2,18 @@ import React from 'react'
 
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ThemeProvider } from './Theme'
+import { TermsOfUseProvider } from '@/TermsOfUse/TermsOfUseProvider.server'
 
-export const Providers: React.FC<{
+export async function Providers({
+  children,
+}: {
   children: React.ReactNode
-}> = ({ children }) => {
+}) {
   return (
     <ThemeProvider>
-      <HeaderThemeProvider>{children}</HeaderThemeProvider>
+      <HeaderThemeProvider>
+        <TermsOfUseProvider>{children}</TermsOfUseProvider>
+      </HeaderThemeProvider>
     </ThemeProvider>
   )
 }

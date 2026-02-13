@@ -29,6 +29,15 @@
     font-size: unset;
     font-family: "Hanken Grotesk", sans-serif;
   }
+
+  [data-theme='dark'] h1,
+  [data-theme='dark'] h2,
+  [data-theme='dark'] h3,
+  [data-theme='dark'] h4,
+  [data-theme='dark'] h5,
+  [data-theme='dark'] h6 {
+    color: oklch(98.5% 0 0deg);
+  }
 }
 
 @plugin "@tailwindcss/typography";
@@ -240,6 +249,10 @@ html[data-theme='light'] {
   font-family: "Hanken Grotesk";
 }
 
+.payload-richtext {
+  padding: 0 !important;
+}
+
 .wysiwyg h2 {
   line-height: 1.2em;
   font-weight: 700;
@@ -271,6 +284,10 @@ html[data-theme='light'] {
   color: oklch(14.5% 0 0deg);
   font-size: 32px;
   margin-bottom: 20px;
+}
+
+[data-theme='dark'] .wysiwyg__small h2 {
+  color: white;
 }
 
 .wysiwyg__small h2 strong {
@@ -368,13 +385,13 @@ html[data-theme='light'] {
 }
 
 .gallery-image-container {
-  border: 20px solid #BFC0C2;
-  border-radius: 10px;
+  border: none;
+  border-radius: 0;
 }
 
 .gallery-image {
   height: 280px !important;
-  border: 10px solid white;
+  border: none;
 }
 
 .grid-card-image {
