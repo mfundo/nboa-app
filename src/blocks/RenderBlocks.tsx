@@ -9,6 +9,7 @@ import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CodeBlock } from '@/blocks/Code/Component'
 import { CollectionsBlock } from '@/blocks/Collections/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { ContentWithImageStackBlock } from '@/blocks/ContentWithImageStack/Component'
 import { ContentWithMediaBlock } from '@/blocks/ContentWithMedia/Component'
 import { FeaturedContentBlock } from '@/blocks/FeaturedContent/Component'
 import { FormBlock } from '@/blocks/Form/Component'
@@ -29,6 +30,7 @@ const blockComponents = {
   code: CodeBlock,
   collections: CollectionsBlock,
   content: ContentBlock,
+  contentWithImageStack: ContentWithImageStackBlock,
   contentWithMedia: ContentWithMediaBlock,
   cta: CallToActionBlock,
   featuredContent: FeaturedContentBlock,

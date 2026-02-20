@@ -24,7 +24,7 @@ export const CollectionsBlock: React.FC<CollectionsProps> = ({ title, descriptio
       </h2>
 
       {description &&
-        <p className="mb-8 md:mb-12 text-center text-sm md:text-base text-gray-600 scroll-animate scroll-animate-delay-100">
+        <p className="mb-8 md:mb-12 text-center text-sm md:text-base scroll-animate scroll-animate-delay-100">
           {description}
         </p>
       }

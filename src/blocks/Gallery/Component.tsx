@@ -30,16 +30,18 @@ export const GalleryBlock: React.FC<GalleryProps> = ({ title, images }) => {
                 <>
                   <button
                     onClick={() => setLightboxIndex(index)}
-                    className="w-full border border-gray-300 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400 transition-colors"
+                    className="w-full border-2 border-gray-300 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:border-brand hover:shadow-lg group"
                     aria-label={`Open ${image.alt || 'image'} in lightbox`}
                   >
-                    <Image
-                      src={image.url || ''}
-                      alt={image.alt || ''}
-                      width={image.sizes?.medium?.width || 250}
-                      height={280}
-                      className="w-full h-auto"
-                    />
+                    <div className="overflow-hidden">
+                      <Image
+                        src={image.url || ''}
+                        alt={image.alt || ''}
+                        width={image.sizes?.medium?.width || 250}
+                        height={280}
+                        className="w-full h-auto transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
                   </button>
                   {item.caption && <p className="mt-2 text-xs md:text-sm">{item.caption || 'Caption'}</p>}
                 </>

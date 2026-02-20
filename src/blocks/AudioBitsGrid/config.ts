@@ -40,10 +40,9 @@ export const AudioBitsGrid: Block = {
           }),
         },
         {
-          name: 'audio',
+          name: 'missingBit',
           type: 'relationship',
-          relationTo: 'media',
-          required: true,
+          relationTo: 'missingBits',
         },
       ],
     },

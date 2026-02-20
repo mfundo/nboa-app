@@ -79,7 +79,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, disableIcon 
             type: 'radio',
             admin: {
               layout: 'horizontal',
-              width: '50%',
+              width: '30%',
             },
             defaultValue: 'custom',
             options: [
@@ -94,63 +94,46 @@ export const link: LinkType = ({ appearances, disableLabel = false, disableIcon 
             ],
           },
           {
+            name: 'url',
+            type: 'text',
+            label: 'Custom URL',
+            admin: {
+              width: '35%',
+            },
+          },
+          {
             name: 'newTab',
             type: 'checkbox',
+            label: 'Open in new tab',
             admin: {
+              width: '15%',
               style: {
                 alignSelf: 'flex-end',
               },
-              width: '50%',
             },
-            label: 'Open in new tab',
+          },
+          {
+            name: 'reference',
+            type: 'relationship',
+            label: 'Internal link',
+            relationTo: ['pages', 'posts'],
+            admin: {
+              width: '20%',
+            },
           },
         ],
       },
     ],
   }
 
-  const linkTypes: Field[] = [
-    {
-      name: 'reference',
-      type: 'relationship',
-      label: 'Document to link to',
-      relationTo: ['pages', 'posts'],
-      required: false,
-    },
-    {
-      name: 'url',
-      type: 'text',
-      label: 'Custom URL',
-      required: false,
-    },
-  ]
-
+  // Add label field if not disabled
   if (!disableLabel) {
-    const linkTypesWithWidth = linkTypes.map((linkType) => ({
-      ...linkType,
-      admin: {
-        ...linkType.admin,
-        width: '50%',
-      },
-    }))
-
     linkResult.fields.push({
-      type: 'row',
-      fields: [
-        ...(linkTypesWithWidth as any),
-        {
-          name: 'label',
-          type: 'text',
-          admin: {
-            width: '50%',
-          },
-          label: 'Label',
-          required: false,
-        },
-      ],
-    } as any)
-  } else {
-    linkResult.fields = [...linkResult.fields, ...linkTypes]
+      name: 'label',
+      type: 'text',
+      label: 'Label',
+      required: false,
+    })
   }
 
   if (appearances !== false) {

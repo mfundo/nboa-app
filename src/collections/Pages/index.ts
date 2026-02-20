@@ -10,6 +10,7 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Code } from '../../blocks/Code/config'
 import { Collections } from '../../blocks/Collections/config'
 import { Content } from '../../blocks/Content/config'
+import { ContentWithImageStack } from '../../blocks/ContentWithImageStack/config'
 import { ContentWithMedia } from '../../blocks/ContentWithMedia/config'
 import { FeaturedContent } from '../../blocks/FeaturedContent/config'
 import { FormBlock } from '../../blocks/Form/config'
@@ -82,7 +83,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Archive, AudioBitsCards, AudioBitsGrid, Banner, CallToAction, Code, Collections, Content, ContentWithMedia, FeaturedContent, FormBlock, Gallery, Grid6Masonry, MediaBlock, MissingBit, SectionIntro, Services, Slider, SpecialContent],
+              blocks: [Archive, AudioBitsCards, AudioBitsGrid, Banner, CallToAction, Code, Collections, Content, ContentWithImageStack, ContentWithMedia, FeaturedContent, FormBlock, Gallery, Grid6Masonry, MediaBlock, MissingBit, SectionIntro, Services, Slider, SpecialContent],
               required: true,
               admin: {
                 initCollapsed: true,

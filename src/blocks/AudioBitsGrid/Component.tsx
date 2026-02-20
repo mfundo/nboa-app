@@ -1,9 +1,8 @@
 'use client'
-import React, { useRef } from 'react'
+import React from 'react'
 import type { AudioBitsGridBlock as AudioBitsGridProps } from '@/payload-types'
 import Image from 'next/image'
 import { cn } from '@/utilities/ui'
-import { Play } from 'lucide-react'
 import RichText from '@/components/RichText'
 import Link from 'next/link'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
@@ -20,46 +19,29 @@ interface LinkObject {
 
 interface BlockItem {
   image?: MediaObject | number
-  audio?: MediaObject | number
+  missingBit?: any
   title?: string
   content?: DefaultTypedEditorState
   link?: LinkObject | string
 }
 
 export const AudioBitsGridBlock: React.FC<AudioBitsGridProps> = ({ blocks }) => {
-  const audioRefs = useRef<(HTMLAudioElement | null)[]>([])
-  const [playingIndex, setPlayingIndex] = React.useState<number | null>(null)
-
-  const togglePlayPause = (index: number, e: React.MouseEvent) => {
-    e.stopPropagation()
-    const audio = audioRefs.current[index]
-    if (!audio) return
-
-    if (playingIndex === index && !audio.paused) {
-      audio.pause()
-      setPlayingIndex(null)
-    } else {
-      audioRefs.current.forEach((el, i) => {
-        if (i !== index && el) el.pause()
-      })
-      audio.play()
-      setPlayingIndex(index)
-    }
-  }
-
   const featuredBlock = blocks?.[0] as BlockItem | undefined
   const smallBlocks = (blocks?.slice(1, 5) as BlockItem[] | undefined)
 
   const renderCard = (block: BlockItem, index: number, isFeatured = false) => {
     const imageObj = typeof block.image === 'object' && block.image !== null ? block.image : null
-    const audioObj = typeof block.audio === 'object' && block.audio !== null ? block.audio : null
     const hasImage = imageObj !== null
     const hasContent = block.content && block.title
     const isContentCard = hasContent && !hasImage
 
-    // Determine link destination
+    // Determine link destination - can be from missingBit or direct link
     let href = '#'
-    if (typeof block.link === 'object' && block.link && 'url' in block.link) {
+    if (block.missingBit) {
+      // If missingBit exists, link to it
+      const missingBitSlug = typeof block.missingBit === 'object' ? block.missingBit.slug : block.missingBit
+      href = `/missing-bits/${missingBitSlug}` || '#'
+    } else if (typeof block.link === 'object' && block.link && 'url' in block.link) {
       href = block.link.url || '#'
     } else if (typeof block.link === 'string') {
       href = block.link
@@ -87,22 +69,6 @@ export const AudioBitsGridBlock: React.FC<AudioBitsGridProps> = ({ blocks }) => 
           </div>
         )}
 
-        {/* Play Button - Center on all image cards (always visible on image) */}
-        {audioObj && (
-          <button
-            onClick={(e) => togglePlayPause(index, e)}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-black transition-all cursor-pointer"
-            style={{ width: '48px', height: '48px', maxWidth: 'none' }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLElement
-              el.style.width = '48px'
-              el.style.height = '48px'
-            }}
-            aria-label="Play audio">
-            <Play className="w-5 h-5 md:w-6 md:h-6 fill-black text-black" />
-          </button>
-        )}
-
         {/* Hover Overlay - Image Cards Only */}
         {hasImage && (
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 md:p-6 lg:p-8 flex flex-col justify-center items-center" style={{ backgroundColor: 'var(--brand)' }}>
@@ -117,17 +83,6 @@ export const AudioBitsGridBlock: React.FC<AudioBitsGridProps> = ({ blocks }) => 
               )}
             </div>
           </div>
-        )}
-
-        {/* Audio Element */}
-        {audioObj && (
-          <audio
-            ref={(el) => {
-              audioRefs.current[index] = el
-            }}
-            src={(audioObj as MediaObject).url || ''}
-            onEnded={() => setPlayingIndex(null)}
-          />
         )}
       </div>
     )

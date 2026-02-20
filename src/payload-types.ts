@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    missingBits: MissingBit;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -93,6 +94,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    missingBits: MissingBitsSelect<false> | MissingBitsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -168,6 +170,7 @@ export interface Page {
     | CodeBlock
     | CollectionsBlock
     | ContentBlock
+    | ContentWithImageStackBlock
     | ContentWithMediaBlock
     | FeaturedContentBlock
     | FormBlock
@@ -494,13 +497,47 @@ export interface AudioBitsGridBlock {
           };
           [k: string]: unknown;
         } | null;
-        audio: number | Media;
+        missingBit?: (number | null) | MissingBit;
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'audioBitsGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missingBits".
+ */
+export interface MissingBit {
+  id: number;
+  title: string;
+  image: number | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        type: 'external' | 'spotify' | 'podcast';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -551,6 +588,7 @@ export interface CallToActionBlock {
     | {
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -561,7 +599,6 @@ export interface CallToActionBlock {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -631,6 +668,7 @@ export interface ContentBlock {
         enableLink?: boolean | null;
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -641,7 +679,6 @@ export interface ContentBlock {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -654,6 +691,39 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithImageStackBlock".
+ */
+export interface ContentWithImageStackBlock {
+  title: string;
+  image: number | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  imageGridColumns?: ('1' | '2' | '3') | null;
+  images?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithImageStack';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -681,6 +751,7 @@ export interface ContentWithMediaBlock {
     | {
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -691,7 +762,6 @@ export interface ContentWithMediaBlock {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -1125,6 +1195,7 @@ export interface ServicesBlock {
         } | null;
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1135,7 +1206,6 @@ export interface ServicesBlock {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -1405,6 +1475,10 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
+        relationTo: 'missingBits';
+        value: number | MissingBit;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
@@ -1487,6 +1561,7 @@ export interface PagesSelect<T extends boolean = true> {
         code?: T | CodeBlockSelect<T>;
         collections?: T | CollectionsBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
+        contentWithImageStack?: T | ContentWithImageStackBlockSelect<T>;
         contentWithMedia?: T | ContentWithMediaBlockSelect<T>;
         featuredContent?: T | FeaturedContentBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
@@ -1554,7 +1629,7 @@ export interface AudioBitsGridBlockSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         content?: T;
-        audio?: T;
+        missingBit?: T;
         id?: T;
       };
   id?: T;
@@ -1583,9 +1658,9 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
               appearance?: T;
             };
@@ -1637,12 +1712,30 @@ export interface ContentBlockSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
               appearance?: T;
             };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithImageStackBlock_select".
+ */
+export interface ContentWithImageStackBlockSelect<T extends boolean = true> {
+  title?: T;
+  image?: T;
+  content?: T;
+  imageGridColumns?: T;
+  images?:
+    | T
+    | {
+        image?: T;
         id?: T;
       };
   id?: T;
@@ -1663,9 +1756,9 @@ export interface ContentWithMediaBlockSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
               appearance?: T;
               icon?: T;
@@ -1784,9 +1877,9 @@ export interface ServicesBlockSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
               appearance?: T;
             };
@@ -1968,6 +2061,25 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missingBits_select".
+ */
+export interface MissingBitsSelect<T extends boolean = true> {
+  title?: T;
+  image?: T;
+  content?: T;
+  links?:
+    | T
+    | {
+        type?: T;
+        url?: T;
+        id?: T;
+      };
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2279,6 +2391,7 @@ export interface Header {
     | {
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2289,7 +2402,6 @@ export interface Header {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
         };
         id?: string | null;
@@ -2313,6 +2425,7 @@ export interface Footer {
     | {
         link?: {
           type?: ('reference' | 'custom') | null;
+          url?: string | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2323,7 +2436,6 @@ export interface Footer {
                 relationTo: 'posts';
                 value: number | Post;
               } | null);
-          url?: string | null;
           label?: string | null;
         };
         id?: string | null;
@@ -2376,9 +2488,9 @@ export interface HeaderSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
             };
         id?: T;
@@ -2406,9 +2518,9 @@ export interface FooterSelect<T extends boolean = true> {
           | T
           | {
               type?: T;
+              url?: T;
               newTab?: T;
               reference?: T;
-              url?: T;
               label?: T;
             };
         id?: T;
