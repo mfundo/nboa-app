@@ -12,6 +12,7 @@ const S3_REGION = process.env.S3_REGION || 'us-east-1'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {

@@ -8,6 +8,9 @@ import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import { CardPostData } from '@/components/Card'
 
+// Use dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic'
+
 type Args = {
   searchParams: Promise<{
     q: string
